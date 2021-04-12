@@ -8,10 +8,16 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_auc_score
 from azureml.core.run import Run
 from azureml.core import Dataset
+from azureml.data.dataset_factory import TabularDatasetFactory
 
-run = Run.get_context()
-ws = run.experiment.workspace
-ds = ws.datasets['breast_cancer_data']
+try:
+    run  = Run.get_context()
+    workspace = run.experiment.workspace
+except:
+    workspace = Workspace.from_config()
+
+dataset = Dataset.get_by_name(workspace, name='breast_cancer_data')
+ds = dataset.to_pandas_dataframe()
 
 def process_data(data):
     x_df = data.to_pandas_dataframe().dropna()
