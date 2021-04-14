@@ -1,0 +1,126 @@
+Tips: You can try get_logs(): https://aka.ms/debugimage#dockerlog or local deployment: https://aka.ms/debugimage#debug-locally to debug if deployment takes longer than 10 minutes.
+Running
+2021-04-14 18:46:54+00:00 Registering the environment.
+2021-04-14 18:46:55+00:00 Use the existing image.
+2021-04-14 18:46:56+00:00 Generating deployment configuration.
+2021-04-14 18:46:58+00:00 Submitting deployment to compute.
+2021-04-14 18:47:01+00:00 Checking the status of deployment breast-cancer-api..
+2021-04-14 18:55:52+00:00 Checking the status of inference endpoint breast-cancer-api.
+Failed
+ERROR:azureml.core.webservice.webservice:Service deployment polling reached non-successful terminal state, current service state: Failed
+Operation ID: 9ec0f350-a903-4479-a730-991d35fbf9c0
+More information can be found using '.get_logs()'
+Error:
+{
+  "code": "AciDeploymentFailed",
+  "statusCode": 400,
+  "message": "Aci Deployment failed with exception: Your container application crashed. This may be caused by errors in your scoring file's init() function.
+	1. Please check the logs for your container instance: breast-cancer-api. From the AML SDK, you can run print(service.get_logs()) if you have service object to fetch the logs.
+	2. You can interactively debug your scoring file locally. Please refer to https://docs.microsoft.com/azure/machine-learning/how-to-debug-visual-studio-code#debug-and-troubleshoot-deployments for more information.
+	3. You can also try to run image 5f8501b5d04a41e780cef89a09871929.azurecr.io/azureml/azureml_2a0e99d2b6c0b56ef3ce1012e5647b1d locally. Please refer to https://aka.ms/debugimage#service-launch-fails for more information.",
+  "details": [
+    {
+      "code": "CrashLoopBackOff",
+      "message": "Your container application crashed. This may be caused by errors in your scoring file's init() function.
+	1. Please check the logs for your container instance: breast-cancer-api. From the AML SDK, you can run print(service.get_logs()) if you have service object to fetch the logs.
+	2. You can interactively debug your scoring file locally. Please refer to https://docs.microsoft.com/azure/machine-learning/how-to-debug-visual-studio-code#debug-and-troubleshoot-deployments for more information.
+	3. You can also try to run image 5f8501b5d04a41e780cef89a09871929.azurecr.io/azureml/azureml_2a0e99d2b6c0b56ef3ce1012e5647b1d locally. Please refer to https://aka.ms/debugimage#service-launch-fails for more information."
+    },
+    {
+      "code": "AciDeploymentFailed",
+      "message": "Your container application crashed. Please follow the steps to debug:
+	1. From the AML SDK, you can run print(service.get_logs()) if you have service object to fetch the logs. Please refer to https://aka.ms/debugimage#dockerlog for more information.
+	2. If your container application crashed. This may be caused by errors in your scoring file's init() function. You can try debugging locally first. Please refer to https://aka.ms/debugimage#debug-locally for more information.
+	3. You can also interactively debug your scoring file locally. Please refer to https://docs.microsoft.com/azure/machine-learning/how-to-debug-visual-studio-code#debug-and-troubleshoot-deployments for more information.
+	4. View the diagnostic events to check status of container, it may help you to debug the issue.
+"RestartCount": 4
+"CurrentState": {"state":"Waiting","startTime":null,"exitCode":null,"finishTime":null,"detailStatus":"CrashLoopBackOff: Back-off restarting failed"}
+"PreviousState": {"state":"Terminated","startTime":"2021-04-14T18:56:47.947Z","exitCode":111,"finishTime":"2021-04-14T18:56:55.552Z","detailStatus":"Error"}
+"Events":
+{"count":3,"firstTimestamp":"2021-04-14T17:12:43Z","lastTimestamp":"2021-04-14T18:53:14Z","name":"Pulling","message":"pulling image "5f8501b5d04a41e780cef89a09871929.azurecr.io/azureml/azureml_2a0e99d2b6c0b56ef3ce1012e5647b1d@sha256:2d1dd8fc8b3cfc5b04e20aac0b38b95a73d6fa2093ca151384fe7df8e3939abf"","type":"Normal"}
+{"count":3,"firstTimestamp":"2021-04-14T17:14:37Z","lastTimestamp":"2021-04-14T18:53:21Z","name":"Pulled","message":"Successfully pulled image "5f8501b5d04a41e780cef89a09871929.azurecr.io/azureml/azureml_2a0e99d2b6c0b56ef3ce1012e5647b1d@sha256:2d1dd8fc8b3cfc5b04e20aac0b38b95a73d6fa2093ca151384fe7df8e3939abf"","type":"Normal"}
+{"count":37,"firstTimestamp":"2021-04-14T17:14:57Z","lastTimestamp":"2021-04-14T18:56:47Z","name":"Started","message":"Started container","type":"Normal"}
+{"count":37,"firstTimestamp":"2021-04-14T17:15:04Z","lastTimestamp":"2021-04-14T18:56:55Z","name":"Killing","message":"Killing container with id 5fef6f154bde3fa0307f0534eb9992e0f05d78b9ee58a7a62a00a3cfea635678.","type":"Normal"}
+{"count":1,"firstTimestamp":"2021-04-14T17:38:32Z","lastTimestamp":"2021-04-14T17:38:32Z","name":"Pulling","message":"pulling image "5f8501b5d04a41e780cef89a09871929.azurecr.io/azureml/azureml_2a0e99d2b6c0b56ef3ce1012e5647b1d@sha256:2d1dd8fc8b3cfc5b04e20aac0b38b95a73d6fa2093ca151384fe7df8e3939abf"","type":"Normal"}
+{"count":1,"firstTimestamp":"2021-04-14T17:40:15Z","lastTimestamp":"2021-04-14T17:40:15Z","name":"Pulled","message":"Successfully pulled image "5f8501b5d04a41e780cef89a09871929.azurecr.io/azureml/azureml_2a0e99d2b6c0b56ef3ce1012e5647b1d@sha256:2d1dd8fc8b3cfc5b04e20aac0b38b95a73d6fa2093ca151384fe7df8e3939abf"","type":"Normal"}
+{"count":18,"firstTimestamp":"2021-04-14T17:41:49Z","lastTimestamp":"2021-04-14T18:14:41Z","name":"Started","message":"Started container","type":"Normal"}
+{"count":18,"firstTimestamp":"2021-04-14T17:41:55Z","lastTimestamp":"2021-04-14T18:14:47Z","name":"Killing","message":"Killing container with id 02fcaaa5d10a59cb145b1fe159438b5a217ff922967a5fe796d4d0f3266196c9.","type":"Normal"}
+{"count":2,"firstTimestamp":"2021-04-14T18:10:27Z","lastTimestamp":"2021-04-14T18:47:58Z","name":"Pulling","message":"pulling image "5f8501b5d04a41e780cef89a09871929.azurecr.io/azureml/azureml_2a0e99d2b6c0b56ef3ce1012e5647b1d@sha256:2d1dd8fc8b3cfc5b04e20aac0b38b95a73d6fa2093ca151384fe7df8e3939abf"","type":"Normal"}
+{"count":2,"firstTimestamp":"2021-04-14T18:12:15Z","lastTimestamp":"2021-04-14T18:49:32Z","name":"Pulled","message":"Successfully pulled image "5f8501b5d04a41e780cef89a09871929.azurecr.io/azureml/azureml_2a0e99d2b6c0b56ef3ce1012e5647b1d@sha256:2d1dd8fc8b3cfc5b04e20aac0b38b95a73d6fa2093ca151384fe7df8e3939abf"","type":"Normal"}
+{"count":10,"firstTimestamp":"2021-04-14T18:14:58Z","lastTimestamp":"2021-04-14T18:54:01Z","name":"Started","message":"Started container","type":"Normal"}
+{"count":10,"firstTimestamp":"2021-04-14T18:15:04Z","lastTimestamp":"2021-04-14T18:54:06Z","name":"Killing","message":"Killing container with id c71d5f97982e83767f6b1cc1975cf9cd84af5d2a6a650b4e7b447aa81bd9242d.","type":"Normal"}
+"
+    }
+  ]
+}
+
+---------------------------------------------------------------------------
+WebserviceException                       Traceback (most recent call last)
+<ipython-input-73-5c169ea10a10> in <module>
+     10                        deployment_config=deployment_config,
+     11                        overwrite=True)
+---> 12 service.wait_for_deployment(True)
+     13 print("State: " + service.state)
+     14 print("Scoring URI: " + service.scoring_uri)
+
+/anaconda/envs/azureml_py36/lib/python3.6/site-packages/azureml/core/webservice/webservice.py in wait_for_deployment(self, show_output, timeout_sec)
+    921                                           'Error:\n'
+    922                                           '{}'.format(self.state, self._operation_endpoint.split('/')[-1],
+--> 923                                                       logs_response, format_error_response), logger=module_logger)
+    924             print('{} service creation operation finished, operation "{}"'.format(self._webservice_type,
+    925                                                                                   operation_state))
+
+WebserviceException: WebserviceException:
+	Message: Service deployment polling reached non-successful terminal state, current service state: Failed
+Operation ID: 9ec0f350-a903-4479-a730-991d35fbf9c0
+More information can be found using '.get_logs()'
+Error:
+{
+  "code": "AciDeploymentFailed",
+  "statusCode": 400,
+  "message": "Aci Deployment failed with exception: Your container application crashed. This may be caused by errors in your scoring file's init() function.
+	1. Please check the logs for your container instance: breast-cancer-api. From the AML SDK, you can run print(service.get_logs()) if you have service object to fetch the logs.
+	2. You can interactively debug your scoring file locally. Please refer to https://docs.microsoft.com/azure/machine-learning/how-to-debug-visual-studio-code#debug-and-troubleshoot-deployments for more information.
+	3. You can also try to run image 5f8501b5d04a41e780cef89a09871929.azurecr.io/azureml/azureml_2a0e99d2b6c0b56ef3ce1012e5647b1d locally. Please refer to https://aka.ms/debugimage#service-launch-fails for more information.",
+  "details": [
+    {
+      "code": "CrashLoopBackOff",
+      "message": "Your container application crashed. This may be caused by errors in your scoring file's init() function.
+	1. Please check the logs for your container instance: breast-cancer-api. From the AML SDK, you can run print(service.get_logs()) if you have service object to fetch the logs.
+	2. You can interactively debug your scoring file locally. Please refer to https://docs.microsoft.com/azure/machine-learning/how-to-debug-visual-studio-code#debug-and-troubleshoot-deployments for more information.
+	3. You can also try to run image 5f8501b5d04a41e780cef89a09871929.azurecr.io/azureml/azureml_2a0e99d2b6c0b56ef3ce1012e5647b1d locally. Please refer to https://aka.ms/debugimage#service-launch-fails for more information."
+    },
+    {
+      "code": "AciDeploymentFailed",
+      "message": "Your container application crashed. Please follow the steps to debug:
+	1. From the AML SDK, you can run print(service.get_logs()) if you have service object to fetch the logs. Please refer to https://aka.ms/debugimage#dockerlog for more information.
+	2. If your container application crashed. This may be caused by errors in your scoring file's init() function. You can try debugging locally first. Please refer to https://aka.ms/debugimage#debug-locally for more information.
+	3. You can also interactively debug your scoring file locally. Please refer to https://docs.microsoft.com/azure/machine-learning/how-to-debug-visual-studio-code#debug-and-troubleshoot-deployments for more information.
+	4. View the diagnostic events to check status of container, it may help you to debug the issue.
+"RestartCount": 4
+"CurrentState": {"state":"Waiting","startTime":null,"exitCode":null,"finishTime":null,"detailStatus":"CrashLoopBackOff: Back-off restarting failed"}
+"PreviousState": {"state":"Terminated","startTime":"2021-04-14T18:56:47.947Z","exitCode":111,"finishTime":"2021-04-14T18:56:55.552Z","detailStatus":"Error"}
+"Events":
+{"count":3,"firstTimestamp":"2021-04-14T17:12:43Z","lastTimestamp":"2021-04-14T18:53:14Z","name":"Pulling","message":"pulling image "5f8501b5d04a41e780cef89a09871929.azurecr.io/azureml/azureml_2a0e99d2b6c0b56ef3ce1012e5647b1d@sha256:2d1dd8fc8b3cfc5b04e20aac0b38b95a73d6fa2093ca151384fe7df8e3939abf"","type":"Normal"}
+{"count":3,"firstTimestamp":"2021-04-14T17:14:37Z","lastTimestamp":"2021-04-14T18:53:21Z","name":"Pulled","message":"Successfully pulled image "5f8501b5d04a41e780cef89a09871929.azurecr.io/azureml/azureml_2a0e99d2b6c0b56ef3ce1012e5647b1d@sha256:2d1dd8fc8b3cfc5b04e20aac0b38b95a73d6fa2093ca151384fe7df8e3939abf"","type":"Normal"}
+{"count":37,"firstTimestamp":"2021-04-14T17:14:57Z","lastTimestamp":"2021-04-14T18:56:47Z","name":"Started","message":"Started container","type":"Normal"}
+{"count":37,"firstTimestamp":"2021-04-14T17:15:04Z","lastTimestamp":"2021-04-14T18:56:55Z","name":"Killing","message":"Killing container with id 5fef6f154bde3fa0307f0534eb9992e0f05d78b9ee58a7a62a00a3cfea635678.","type":"Normal"}
+{"count":1,"firstTimestamp":"2021-04-14T17:38:32Z","lastTimestamp":"2021-04-14T17:38:32Z","name":"Pulling","message":"pulling image "5f8501b5d04a41e780cef89a09871929.azurecr.io/azureml/azureml_2a0e99d2b6c0b56ef3ce1012e5647b1d@sha256:2d1dd8fc8b3cfc5b04e20aac0b38b95a73d6fa2093ca151384fe7df8e3939abf"","type":"Normal"}
+{"count":1,"firstTimestamp":"2021-04-14T17:40:15Z","lastTimestamp":"2021-04-14T17:40:15Z","name":"Pulled","message":"Successfully pulled image "5f8501b5d04a41e780cef89a09871929.azurecr.io/azureml/azureml_2a0e99d2b6c0b56ef3ce1012e5647b1d@sha256:2d1dd8fc8b3cfc5b04e20aac0b38b95a73d6fa2093ca151384fe7df8e3939abf"","type":"Normal"}
+{"count":18,"firstTimestamp":"2021-04-14T17:41:49Z","lastTimestamp":"2021-04-14T18:14:41Z","name":"Started","message":"Started container","type":"Normal"}
+{"count":18,"firstTimestamp":"2021-04-14T17:41:55Z","lastTimestamp":"2021-04-14T18:14:47Z","name":"Killing","message":"Killing container with id 02fcaaa5d10a59cb145b1fe159438b5a217ff922967a5fe796d4d0f3266196c9.","type":"Normal"}
+{"count":2,"firstTimestamp":"2021-04-14T18:10:27Z","lastTimestamp":"2021-04-14T18:47:58Z","name":"Pulling","message":"pulling image "5f8501b5d04a41e780cef89a09871929.azurecr.io/azureml/azureml_2a0e99d2b6c0b56ef3ce1012e5647b1d@sha256:2d1dd8fc8b3cfc5b04e20aac0b38b95a73d6fa2093ca151384fe7df8e3939abf"","type":"Normal"}
+{"count":2,"firstTimestamp":"2021-04-14T18:12:15Z","lastTimestamp":"2021-04-14T18:49:32Z","name":"Pulled","message":"Successfully pulled image "5f8501b5d04a41e780cef89a09871929.azurecr.io/azureml/azureml_2a0e99d2b6c0b56ef3ce1012e5647b1d@sha256:2d1dd8fc8b3cfc5b04e20aac0b38b95a73d6fa2093ca151384fe7df8e3939abf"","type":"Normal"}
+{"count":10,"firstTimestamp":"2021-04-14T18:14:58Z","lastTimestamp":"2021-04-14T18:54:01Z","name":"Started","message":"Started container","type":"Normal"}
+{"count":10,"firstTimestamp":"2021-04-14T18:15:04Z","lastTimestamp":"2021-04-14T18:54:06Z","name":"Killing","message":"Killing container with id c71d5f97982e83767f6b1cc1975cf9cd84af5d2a6a650b4e7b447aa81bd9242d.","type":"Normal"}
+"
+    }
+  ]
+}
+	InnerException None
+	ErrorResponse 
+{
+    "error": {
+        "message": "Service deployment polling reached non-successful terminal state, current service state: Failed\nOperation ID: 9ec0f350-a903-4479-a730-991d35fbf9c0\nMore information can be found using '.get_logs()'\nError:\n{\n  \"code\": \"AciDeploymentFailed\",\n  \"statusCode\": 400,\n  \"message\": \"Aci Deployment failed with exception: Your container application crashed. This may be caused by errors in your scoring file's init() function.\n\t1. Please check the logs for your container instance: breast-cancer-api. From the AML SDK, you can run print(service.get_logs()) if you have service object to fetch the logs.\n\t2. You can interactively debug your scoring file locally. Please refer to https://docs.microsoft.com/azure/machine-learning/how-to-debug-visual-studio-code#debug-and-troubleshoot-deployments for more information.\n\t3. You can also try to run image 5f8501b5d04a41e780cef89a09871929.azurecr.io/azureml/azureml_2a0e99d2b6c0b56ef3ce1012e5647b1d locally. Please refer to https://aka.ms/debugimage#service-launch-fails for more information.\",\n  \"details\": [\n    {\n      \"code\": \"CrashLoopBackOff\",\n      \"message\": \"Your container application crashed. This may be caused by errors in your scoring file's init() function.\n\t1. Please check the logs for your container instance: breast-cancer-api. From the AML SDK, you can run print(service.get_logs()) if you have service object to fetch the logs.\n\t2. You can interactively debug your scoring file locally. Please refer to https://docs.microsoft.com/azure/machine-learning/how-to-debug-visual-studio-code#debug-and-troubleshoot-deployments for more information.\n\t3. You can also try to run image 5f8501b5d04a41e780cef89a09871929.azurecr.io/azureml/azureml_2a0e99d2b6c0b56ef3ce1012e5647b1d locally. Please refer to https://aka.ms/debugimage#service-launch-fails for more information.\"\n    },\n    {\n      \"code\": \"AciDeploymentFailed\",\n      \"message\": \"Your container application crashed. Please follow the steps to debug:\n\t1. From the AML SDK, you can run print(service.get_logs()) if you have service object to fetch the logs. Please refer to https://aka.ms/debugimage#dockerlog for more information.\n\t2. If your container application crashed. This may be caused by errors in your scoring file's init() function. You can try debugging locally first. Please refer to https://aka.ms/debugimage#debug-locally for more information.\n\t3. You can also interactively debug your scoring file locally. Please refer to https://docs.microsoft.com/azure/machine-learning/how-to-debug-visual-studio-code#debug-and-troubleshoot-deployments for more information.\n\t4. View the diagnostic events to check status of container, it may help you to debug the issue.\n\"RestartCount\": 4\n\"CurrentState\": {\"state\":\"Waiting\",\"startTime\":null,\"exitCode\":null,\"finishTime\":null,\"detailStatus\":\"CrashLoopBackOff: Back-off restarting failed\"}\n\"PreviousState\": {\"state\":\"Terminated\",\"startTime\":\"2021-04-14T18:56:47.947Z\",\"exitCode\":111,\"finishTime\":\"2021-04-14T18:56:55.552Z\",\"detailStatus\":\"Error\"}\n\"Events\":\n{\"count\":3,\"firstTimestamp\":\"2021-04-14T17:12:43Z\",\"lastTimestamp\":\"2021-04-14T18:53:14Z\",\"name\":\"Pulling\",\"message\":\"pulling image \"5f8501b5d04a41e780cef89a09871929.azurecr.io/azureml/azureml_2a0e99d2b6c0b56ef3ce1012e5647b1d@sha256:2d1dd8fc8b3cfc5b04e20aac0b38b95a73d6fa2093ca151384fe7df8e3939abf\"\",\"type\":\"Normal\"}\n{\"count\":3,\"firstTimestamp\":\"2021-04-14T17:14:37Z\",\"lastTimestamp\":\"2021-04-14T18:53:21Z\",\"name\":\"Pulled\",\"message\":\"Successfully pulled image \"5f8501b5d04a41e780cef89a09871929.azurecr.io/azureml/azureml_2a0e99d2b6c0b56ef3ce1012e5647b1d@sha256:2d1dd8fc8b3cfc5b04e20aac0b38b95a73d6fa2093ca151384fe7df8e3939abf\"\",\"type\":\"Normal\"}\n{\"count\":37,\"firstTimestamp\":\"2021-04-14T17:14:57Z\",\"lastTimestamp\":\"2021-04-14T18:56:47Z\",\"name\":\"Started\",\"message\":\"Started container\",\"type\":\"Normal\"}\n{\"count\":37,\"firstTimestamp\":\"2021-04-14T17:15:04Z\",\"lastTimestamp\":\"2021-04-14T18:56:55Z\",\"name\":\"Killing\",\"message\":\"Killing container with id 5fef6f154bde3fa0307f0534eb9992e0f05d78b9ee58a7a62a00a3cfea635678.\",\"type\":\"Normal\"}\n{\"count\":1,\"firstTimestamp\":\"2021-04-14T17:38:32Z\",\"lastTimestamp\":\"2021-04-14T17:38:32Z\",\"name\":\"Pulling\",\"message\":\"pulling image \"5f8501b5d04a41e780cef89a09871929.azurecr.io/azureml/azureml_2a0e99d2b6c0b56ef3ce1012e5647b1d@sha256:2d1dd8fc8b3cfc5b04e20aac0b38b95a73d6fa2093ca151384fe7df8e3939abf\"\",\"type\":\"Normal\"}\n{\"count\":1,\"firstTimestamp\":\"2021-04-14T17:40:15Z\",\"lastTimestamp\":\"2021-04-14T17:40:15Z\",\"name\":\"Pulled\",\"message\":\"Successfully pulled image \"5f8501b5d04a41e780cef89a09871929.azurecr.io/azureml/azureml_2a0e99d2b6c0b56ef3ce1012e5647b1d@sha256:2d1dd8fc8b3cfc5b04e20aac0b38b95a73d6fa2093ca151384fe7df8e3939abf\"\",\"type\":\"Normal\"}\n{\"count\":18,\"firstTimestamp\":\"2021-04-14T17:41:49Z\",\"lastTimestamp\":\"2021-04-14T18:14:41Z\",\"name\":\"Started\",\"message\":\"Started container\",\"type\":\"Normal\"}\n{\"count\":18,\"firstTimestamp\":\"2021-04-14T17:41:55Z\",\"lastTimestamp\":\"2021-04-14T18:14:47Z\",\"name\":\"Killing\",\"message\":\"Killing container with id 02fcaaa5d10a59cb145b1fe159438b5a217ff922967a5fe796d4d0f3266196c9.\",\"type\":\"Normal\"}\n{\"count\":2,\"firstTimestamp\":\"2021-04-14T18:10:27Z\",\"lastTimestamp\":\"2021-04-14T18:47:58Z\",\"name\":\"Pulling\",\"message\":\"pulling image \"5f8501b5d04a41e780cef89a09871929.azurecr.io/azureml/azureml_2a0e99d2b6c0b56ef3ce1012e5647b1d@sha256:2d1dd8fc8b3cfc5b04e20aac0b38b95a73d6fa2093ca151384fe7df8e3939abf\"\",\"type\":\"Normal\"}\n{\"count\":2,\"firstTimestamp\":\"2021-04-14T18:12:15Z\",\"lastTimestamp\":\"2021-04-14T18:49:32Z\",\"name\":\"Pulled\",\"message\":\"Successfully pulled image \"5f8501b5d04a41e780cef89a09871929.azurecr.io/azureml/azureml_2a0e99d2b6c0b56ef3ce1012e5647b1d@sha256:2d1dd8fc8b3cfc5b04e20aac0b38b95a73d6fa2093ca151384fe7df8e3939abf\"\",\"type\":\"Normal\"}\n{\"count\":10,\"firstTimestamp\":\"2021-04-14T18:14:58Z\",\"lastTimestamp\":\"2021-04-14T18:54:01Z\",\"name\":\"Started\",\"message\":\"Started container\",\"type\":\"Normal\"}\n{\"count\":10,\"firstTimestamp\":\"2021-04-14T18:15:04Z\",\"lastTimestamp\":\"2021-04-14T18:54:06Z\",\"name\":\"Killing\",\"message\":\"Killing container with id c71d5f97982e83767f6b1cc1975cf9cd84af5d2a6a650b4e7b447aa81bd9242d.\",\"type\":\"Normal\"}\n\"\n    }\n  ]\n}"
+    }
+}
