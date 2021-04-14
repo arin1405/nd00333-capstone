@@ -2,7 +2,7 @@ import requests
 import json
 
 # URL for the web service:
-scoring_uri = "http://d86c8f6d-4026-41c5-88ac-8bcd72752825.southcentralus.azurecontainer.io/score"
+scoring_uri = ""
 
 # Two sets of data to score, so we get two results back
 data = {"data":

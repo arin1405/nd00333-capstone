@@ -5,7 +5,6 @@ import pandas as pd
 import joblib
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import roc_auc_score
 from azureml.core.run import Run
 from azureml.core import Dataset
 from azureml.data.dataset_factory import TabularDatasetFactory
@@ -20,7 +19,7 @@ dataset = Dataset.get_by_name(workspace, name='breast_cancer_data')
 ds = dataset.to_pandas_dataframe()
 
 def process_data(data):
-    x_df = data.to_pandas_dataframe().dropna()
+    x_df = data.dropna()
     y_df = x_df.pop("diagnosis")
     return x_df, y_df
 
@@ -38,11 +37,12 @@ def main():
     x, y = process_data(ds)
     x_train, x_test, y_train, y_test = train_test_split(x, y)
     model = LogisticRegression(C=args.C, max_iter=args.max_iter).fit(x_train, y_train)
-    y_pred = model.predict(x_test)
     
-    auc_weighted = roc_auc_score(y_test, y_pred, average='weighted')
+    val_accuracy = model.score(x_test, y_test)
+    #run.log("Accuracy: ", np.float(accuracy))
     
-    run.log("AUC Weighted: ", np.float(auc_weighted))
+    run_logger = Run.get_context()
+    run_logger.log("accuracy", float(val_accuracy))
 
     os.makedirs('outputs', exist_ok=True)
     joblib.dump(model, 'outputs/hyperdrive_breast_cancer_model.joblib')
