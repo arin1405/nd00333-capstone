@@ -2,8 +2,8 @@ import requests
 import json
 
 # URL for the web service:
-scoring_uri = 'http://d691f954-97bb-4f24-8893-1712876f9ba2.southcentralus.azurecontainer.io/score'
-key = 'd3s5zbAZjRSpehuA3gt6hJmyVTd2Mfko'
+scoring_uri = 'http://30b5ada6-3924-4f7d-8ed7-39e461a48590.southcentralus.azurecontainer.io/score'
+key = 'Obfwi24T3yHvW9FrmullBc4xBRPM4Wn1'
 
 # Two sets of data to score, so we get two results back
 data = {"data":
