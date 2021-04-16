@@ -2,7 +2,8 @@ import requests
 import json
 
 # URL for the web service:
-scoring_uri = ""
+scoring_uri = 'http://d691f954-97bb-4f24-8893-1712876f9ba2.southcentralus.azurecontainer.io/score'
+key = 'd3s5zbAZjRSpehuA3gt6hJmyVTd2Mfko'
 
 # Two sets of data to score, so we get two results back
 data = {"data":
@@ -29,7 +30,9 @@ with open("data.json", "w") as _f:
     _f.write(input_data)
 
 # Set the content type
-headers = {"Content-Type": "application/json"}
+headers = {'Content-Type': 'application/json'}
+# If authentication is enabled, set the authorization header
+headers['Authorization'] = f'Bearer {key}'
 
 # Make the request and display the response
 resp = requests.post(scoring_uri, input_data, headers=headers)

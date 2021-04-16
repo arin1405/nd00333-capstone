@@ -1,23 +1,25 @@
 import json
-import logging
-import os
 import numpy as np
-import pandas as pd
+import os
+import pickle
 import joblib
-from azureml.core import Workspace
-from azureml.core.model import Model
+import pandas as pd
 
 def init():
     global model
-    ws = Workspace.from_config()
-    print(Model.get_model_path("best_model", version=2, _workspace=ws))
-    model_path = Model.get_model_path("best_model", version=2, _workspace=ws) 
+    # AZUREML_MODEL_DIR is an environment variable created during deployment.
+    # It is the path to the model folder (./azureml-models/$MODEL_NAME/$VERSION)
+    # For multiple models, it points to the folder containing all deployed models (./azureml-models)
+    model_path = os.path.join(os.getenv('AZUREML_MODEL_DIR'), 'hyperdrive_breast_cancer_model.joblib')
     model = joblib.load(model_path)
 
-def run(input_data):
+def run(raw_data):
     try:
-        predictions = model.predict(pd.DataFrame(json.loads(input_data)['data']))
-        return json.dumps({"result": predictions.tolist()})
-    except Exception as e:
-        result = str(e)
-        return json.dumps({"error": result})
+        data = json.loads(raw_data)['data']
+        data = pd.DataFrame.from_dict(data)
+        # make prediction
+        mypredict = model.predict(data)
+        return mypredict.tolist()
+    except Exception as ex:
+        error = str(ex)
+        return error
