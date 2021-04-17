@@ -125,7 +125,7 @@ Hyperdrive runs in the Experiment:
 
 We found that the hyperdrive-tuned model gives better accuracy so we chose to deploy the best model found from hyperdrive experiment. The below screen shows the model has been deployed and in Healthy status:
 
-![endpoint](screenshots/14.endpoint_active1)
+![endpoint](screenshots/14.endpoint_active1.JPG)
 
 To deploy the model we followed the below mentioned steps:
 
