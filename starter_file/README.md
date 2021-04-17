@@ -1,48 +1,163 @@
-*NOTE:* This file is a template that you can use to create the README for your project. The *TODO* comments below will highlight the information you should be sure to include.
+This capstone project is the part of Azure Machine Learning Nanodegree. In this project we aim to predict breast cancer using Azure Machine Learning SDK. 
 
-# Your Project Title Here
+# Health Analytics: Breast Cancer Prediction
 
-*TODO:* Write a short introduction to your project.
+Breast cancer has now overtaken lung cancer as the [world’s most commonly diagnosed cancer](https://www.who.int/news/item/03-02-2021-breast-cancer-now-most-common-form-of-cancer-who-taking-action), according to statistics released by the International Agency for Research on Cancer (IARC) in December 2020. Diagnosis of breast cancer is performed when an abnormal lump is found or a tiny speck of calcium is seen. Cancer also known as tumor must be quickly and correctly detected in the initial stage to identify what might be beneficial for its cure. Once a suspicious lump is found, the doctors conduct a diagnosis to determine whether it is cancerous and, if so, whether it has spread to other parts of the body. At a fundamental level, machine learning can be helpful to improve the basic detection of cancer development and progression.
+
+In this project we use a breast cancer dataset to predict if a cell is cancerous or not. We will use Microsoft Azure ML SDK to create two models - i) the AutoML model and ii) the Hyperdrive-tuned Logistic Regression model.
 
 ## Project Set Up and Installation
-*OPTIONAL:* If your project has any special installation steps, this is where you should put it. To turn this project into a professional portfolio project, you are encouraged to explain how to set up this project in AzureML.
+In this project we trained two models. The first model is the AutoML model that is developed by creating an AutoML run from Azure ML Python SDK. The second model is a Logistic Regression model where two hyperparameters - `C` (Inverse of regularization strength) and `max_iter` (Maximum number of iterations taken to converge) are tuned by Azure ML's Hyperdrive. We finally chose the Hyperdrive-tuned Logistic Regression model based on the metric accuracy.
+
+The steps used for this project are summarized below:
+
+![Project_Steps](steps.png)
 
 ## Dataset
 
 ### Overview
-*TODO*: Explain about the data you are using and where you got it from.
+Here, we used the breast cancer dataset from [Kaggle](https://www.kaggle.com/merishnasuwal/breast-cancer-prediction-dataset). We aim to predict if a cell is cancerous or not from its physical features. 
 
 ### Task
-*TODO*: Explain the task you are going to be solving with this dataset and the features you will be using for it.
+The dataset contains 6 columns. The first five columns contain different physical features of cells. These five columns contain float values. The sixth column is the target column or dependent variable. It is a binary variable containing 1 and 0 as values where 1 means cancerous cell and 0 means non-cancerous cell. Column details are given below:
+
+- mean_radius: mean radius value of the cell (decimal value)
+- mean_texture: mean texture value of the cell (decimal value)
+- mean_perimeter: mean perimeter of the cell (decimal value)
+- mean_area: mean area of the cell (decimal value)
+- mean_smoothness: mean smoothness value of the cell (decimal value)
+- diagnosis: diagnosis result or target variable (0/1)
 
 ### Access
-*TODO*: Explain how you are accessing the data in your workspace.
+The dataset is accessed by uploading the csv file downloaded from Kaggle into Microsoft Azure ML workspace.
+
+![dataset](screenshots/1.dataset.JPG)
+![dataset_view](screenshots/2.dataset_view.JPG)
 
 ## Automated ML
-*TODO*: Give an overview of the `automl` settings and configuration you used for this experiment
+Azure ML provides Automated machine learning (Auto ML) feature which is the process of automating the time consuming, iterative tasks of machine learning model development.
+
+Here are the configurations and settings used for the AutoML experiment:
+
+```
+automl_settings = {
+    "experiment_timeout_minutes": 30,
+    "max_concurrent_iterations": 5,
+    "primary_metric" : 'accuracy'
+}
+
+automl_config = AutoMLConfig(compute_target=cluster,
+                             task = "classification",
+                             training_data=train_data,
+                             label_column_name="diagnosis",   
+                             enable_early_stopping= True,
+                             featurization= 'auto',
+                             blocked_models=['XGBoostClassifier'],
+                             debug_log = "automl_errors.log",
+                             **automl_settings
+                            )
+```
+
+Breast cancer prediction is a binary classification task. The label column or target column is `diagnosis`. We used "accuracy" as the primary metric here. Iterations are processed concurrently to speed up the training process. We also enabled early stopping to prevent overfitting. Featurization includes automated feature engineering.
 
 ### Results
-*TODO*: What are the results you got with your automated ML model? What were the parameters of the model? How could you have improved it?
 
-*TODO* Remeber to provide screenshots of the `RunDetails` widget as well as a screenshot of the best model trained with it's parameters.
+The best model we got from the experiment is `VotingEnsemble`. We got an accuracty of 94%. The accuracy can be improved by enabling the XGBoost and Deeplearning models and also by increasing the experiment timeout. Performance can also be improved by considering oversampling/undersampling to avoid the class imbalance issue.
+
+![autorun_experiment_models](screenshots/3.autorun_models.JPG)
+![best_model](screenshots/4.best_model.JPG)
+
+Here is the screenshot of the RunDetails widget:
+
+![run_details](screenshots/5.run_details.JPG)
+
+Best model's logs can be seen from the widget on notebook:
+
+![best_model_notebook_logs](screenshots/6.best_model_notebook.JPG)
+
+The confusion matrix for the classification task generated by the best model can be seen from the widget on notebook:
+
+![best_model_confusion_matrix](screenshots/7.best_model_confusion_matrix.JPG)
+
+The metrics transformation chart for the classification task generated by the best model can be seen from the widget on notebook:
+
+![best_model_chart](screenshots/8.best_model_chart.JPG)
+
 
 ## Hyperparameter Tuning
-*TODO*: What kind of model did you choose for this experiment and why? Give an overview of the types of parameters and their ranges used for the hyperparameter search
 
+I chose a Logistic Regression mnodel for this classification task. The reasons behind choosing this models are:
+
+* I found that the target variable is linearly separable using the input features.
+* Logistic Regression is easy to explain than other complex algorithms. 
+* It is simple to train.
+
+The range of hyperparameters:
+
+We tuned two hyper parameters here:
+
+* C (Inverse of regularization strength): It was set to choose from 0.01, 0.1, 1 and 10. Regularization helps to prevent the model from overfitting by penalizing unnecessary features.
+
+* Maximum iterations: It was set to choose from 50, 100, 200 and 500. It is the maximum number of iterations taken for the solvers to converge.
+
+The RandomParameterSampling method was used to search the hyperparameter grid space.
 
 ### Results
-*TODO*: What are the results you got with your model? What were the parameters of the model? How could you have improved it?
 
-*TODO* Remeber to provide screenshots of the `RunDetails` widget as well as a screenshot of the best model trained with it's parameters.
+Our best model tuned with Hyperdrive gave us an accuracy of 95%. The hyper parameters' values were chosen as: C = 0.1 and max_iter = 500.
+
+In addition to upsampling/downsampling of data, we could have set `class_weight` hyper parameter of Logistic Regression model as "balanced" to automatically adjust weights for handling class imbalance. We also could have employed better feature engineering methods to improve the model's performance.
+
+![hyperdrive_result](screenshots/9.hd_result.JPG)
+![hyperdrive_run](screenshots/10.hd_run.JPG)
+
+Hyperdrive tuned best model's result:
+
+![hyperdrive_result](screenshots/11.hd_best_model.JPG)
+
+Hyperdrive runs in the Experiment:
+
+![hyperdrive_runs](screenshots/12.hd_runs.JPG)
+![hyperdrive_runs](screenshots/13.hd_runs.JPG)
+
 
 ## Model Deployment
-*TODO*: Give an overview of the deployed model and instructions on how to query the endpoint with a sample input.
+
+We found that the hyperdrive-tuned model gives better accuracy so we chose to deploy the best model found from hyperdrive experiment. The below screen shows the model has been deployed and in Healthy status:
+
+![endpoint](screenshots/14.endpoint_active1)
+
+To deploy the model we followed the below mentioned steps:
+
+- We registered the best model by providing the model name. 
+- We created the deploy configuration and InferenceConfig by providing the [scoring script](https://github.com/arin1405/nd00333-capstone/blob/master/starter_file/score.py). 
+- We deployed the web service with ACI (Azure Container Instance). 
+- For querying the endpoint, we can use the REST call with the generated REST scoring URI and primary key.
+- We need to send a JSON input data while calling the REST API.
+- In response, the model service sends back the prediction result.
+
+A sample data input is shown below:
+
+![data_input](screenshots/15.data_input.JPG)
+
+## Result
+
+![result](screenshots/16.result.JPG)
+
+Service is deleted after the task.
+
+![service_deleted](screenshots/18.service_deleted.JPG)
+
+Finally cluster is deleted after the task.
+
+![cluster_deleted](screenshots/17.cluster_del_NB.JPG)
 
 ## Screen Recording
-*TODO* Provide a link to a screen recording of the project in action. Remember that the screencast should demonstrate:
-- A working model
-- Demo of the deployed  model
-- Demo of a sample request sent to the endpoint and its response
+
+[Here](https://youtu.be/Et6lWZ5DVeM) is the screencast recording that demonstrates all the mentioned process.
 
 ## Standout Suggestions
-*TODO (Optional):* This is where you can provide information about any standout suggestions that you have attempted.
+
+Application insights were enabled in the model endpoint to log important metrics.
+
+![app_insight](screenshots/19.app_insight.JPG)
