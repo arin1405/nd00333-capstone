@@ -67,7 +67,7 @@ The best model we got from the experiment is `VotingEnsemble`. We got an accurac
 ![autorun_experiment_models](screenshots/3.autorun_models.JPG)
 ![best_model](screenshots/4.best_model.JPG)
 
-The best run details can be seen in Notebook. Below screenshot shows AutoML best model with its run i:
+The best run details can be seen in Notebook. Below screenshot shows AutoML best model with its run id and best run's accuracy as 0.940163:
 
 ![best_run_details](screenshots/20.best_run_details.JPG)
 
